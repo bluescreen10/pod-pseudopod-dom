@@ -464,19 +464,20 @@ sub fix_title
 sub start_headrow
 {
     my $self = shift;
-    $self->push_element( TableRow => 'type' => 'headrow' );
+    $self->{is_headrow} = 1;
 }
 
-sub end_headrow
+sub start_bodyrows
 {
     my $self = shift;
-    $self->reset_to_item( 'TableRow' );
+    $self->{is_headrow} = undef;
 }
 
 sub start_row
 {
     my $self = shift;
-    $self->push_element( TableRow => 'type' => 'row' );
+    my $type = $self->{is_headrow} ? 'headrow' : 'row';
+    $self->push_element( TableRow => 'type' => $type );
 }
 
 sub end_row
